@@ -17,28 +17,28 @@ Public Class Grades
     Dim sqlquery As String
 
     Private Sub viewer()
-        ' Set up connection string
+        
         sqlConn.ConnectionString = "server=" & server & ";" & "user id=" & username & ";" & "password=" & password & ";" & "database=" & database
 
-        ' Open the connection
+        
         sqlConn.Open()
 
-        ' Create the command
+        
         Dim sqlCmd As New MySqlCommand()
         sqlCmd.Connection = sqlConn
 
-        ' Set the SQL command text
+        
         sqlCmd.CommandText = "USE myconnector; SELECT stdmgmt.StudentID, grade_records.CSC3, grade_records.CSC4, grade_records.GElec, grade_records.CW101, grade_records.HUM2, grade_records.NSTP2, grade_records.DS101, grade_records.FILDIS, grade_records.PE
                          FROM (SELECT StudentID FROM stdmgmt) AS stdmgmt
                          LEFT JOIN grade_records ON stdmgmt.StudentID = grade_records.StudentID"
 
-        ' Execute the command and get the reader
+        
         Dim stdInfoReader As MySqlDataReader = sqlCmd.ExecuteReader()
 
-        ' Read the data from the reader
+      
         stdInfoReader.Read()
-        ' Process the data from std_info table  
-        ' For example:
+         
+       
         Dim StudentId As String = stdInfoReader("StudentID").ToString()
         Dim CSC3 As String = stdInfoReader("CSC3").ToString()
         Dim CSC4 As String = stdInfoReader("CSC4").ToString()
@@ -53,16 +53,13 @@ Public Class Grades
         Console.WriteLine("student_id: " & StudentId & ", CSC3: " & CSC3 & ", CSC4: " & CSC4 & ", GElec: " & GElec & ", CW101: " & CW101 & ", HUM2: " & HUM2 & ", NSTP2: " & NSTP2 & ", DS101: " & DS101 & ", FILDIS: " & FILDIS & ", PE: " & PE)
 
 
-        ' Close the reader
+       
 
         stdInfoReader.Close()
         sqlConn.Close()
 
 
-        'sqlConn.Open()
-        'sqlCmd.Connection = sqlConn
-        'sqlCmd.CommandText = "SELECT * FROM myconnector.myconnector"
-
+        
         sqlConn.Open()
         sqlDR = sqlCmd.ExecuteReader
         sqlDt.Load(sqlDR)
@@ -76,17 +73,17 @@ Public Class Grades
     Private Sub Guna2Button1_Click(sender As Object, e As EventArgs) Handles Guna2Button1.Click
         Dim connectionString As String = "server=" + server + ";user id=" + username + ";password=" + password + ";database=" + database
 
-        ' Create a new MySqlConnection with the constructed connection string
+        
         Using sqlConn As New MySqlConnection(connectionString)
-            ' Define the MySqlCommand within the Using block to ensure proper disposal
+            
             Using sqlCmd As New MySqlCommand()
                 Try
-                    ' Set the connection for the command
+                   
                     sqlCmd.Connection = sqlConn
-                    ' Open the connection before executing any command
+                    
                     sqlConn.Open()
 
-                    ' Set the command text and type
+                 
                     sqlCmd.CommandText = "USE myconnector; UPDATE grade_records
                        SET 
                        StudentID = @StudentID,
